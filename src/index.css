@@ -1,0 +1,272 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #ffffff;
+    --ink: #161514;
+    --ink-soft: #565048;
+    --paper: #f6f4ef;
+    --paper-2: #efece4;
+    --line: #e2ded2;
+    --line-strong: #c9c3b1;
+    --accent: #0B1F3A;
+    --accent-2: #123356;
+    --accent-soft: #e9edf3;
+    --gold: #C9A24B;
+    --rust: #a8481f;
+    --rust-soft: #f5e4da;
+    --ochre: #9c7a2e;
+    --ochre-soft: #f4ecd6;
+    --green: #2c6b4d;
+    --green-soft: #e1efe6;
+    --radius: 4px;
+    --shadow: 0 1px 2px rgba(22, 21, 20, 0.04), 0 8px 24px -12px rgba(22, 21, 20, 0.12);
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  .mono, .font-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}
+
+/* Dark Mode CSS Rules */
+html.dark {
+  --bg: #0b1017;
+  --ink: #f1f5f9;
+  --ink-soft: #94a3b8;
+  --paper: #131b26;
+  --paper-2: #1c2738;
+  --line: #233144;
+  --line-strong: #33455e;
+  --accent: #1d3557;
+  --accent-2: #2a4873;
+  --accent-soft: #17263c;
+  --gold: #e2b755;
+  --green: #34a853;
+  --green-soft: #102a1b;
+}
+
+html.dark body {
+  background-color: #0b1017 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Dark Mode Card & Background Overrides */
+html.dark .bg-white {
+  background-color: #131b26 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-\[\#f6f4ef\] {
+  background-color: #1a2433 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .bg-\[\#efece4\] {
+  background-color: #202d40 !important;
+  color: #e2e8f0 !important;
+}
+
+html.dark .bg-\[\#e9edf3\] {
+  background-color: #1a2f4a !important;
+  color: #93c5fd !important;
+}
+
+html.dark .bg-\[\#0B1F3A\] {
+  background-color: #1e375a !important;
+  color: #ffffff !important;
+}
+
+html.dark .bg-\[\#0B1F3A\]\/10 {
+  background-color: rgba(30, 55, 90, 0.4) !important;
+}
+
+html.dark .hover\:bg-\[\#f6f4ef\]:hover {
+  background-color: #1a2433 !important;
+}
+
+html.dark .hover\:bg-\[\#123356\]:hover {
+  background-color: #274775 !important;
+}
+
+/* Dark Mode Text Colors */
+html.dark .text-\[\#161514\] {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-\[\#565048\] {
+  color: #94a3b8 !important;
+}
+
+html.dark .text-\[\#0B1F3A\] {
+  color: #93c5fd !important;
+}
+
+/* Dark Mode Borders */
+html.dark .border-\[\#e2ded2\] {
+  border-color: #233144 !important;
+}
+
+html.dark .border-\[\#c9c3b1\] {
+  border-color: #33455e !important;
+}
+
+/* Form Controls in Dark Mode */
+html.dark input,
+html.dark select,
+html.dark textarea {
+  background-color: #1a2433 !important;
+  color: #f1f5f9 !important;
+  border-color: #33455e !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark table {
+  color: #f1f5f9 !important;
+}
+
+html.dark th {
+  background-color: #131b26 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark td {
+  border-color: #233144 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 3px;
+}
+
+/* Print CSS setup for full A4 printing */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm;
+  }
+
+  html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: #000000 !important;
+    font-size: 9.5px !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print,
+  nav,
+  aside,
+  header,
+  .sidebar,
+  .topbar,
+  button,
+  .print-hide {
+    display: none !important;
+  }
+
+  main, .content {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  .print-sheet {
+    display: block !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: white !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Compact A4 Print Container and Overrides */
+  .a4-compact {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 9px !important;
+    line-height: 1.25 !important;
+  }
+
+  .a4-compact h1 {
+    font-size: 15px !important;
+  }
+
+  .a4-compact h3 {
+    font-size: 10.5px !important;
+    margin-bottom: 2px !important;
+    padding-bottom: 1px !important;
+  }
+
+  .a4-compact table th,
+  .a4-compact table td {
+    padding: 2px 4px !important;
+    font-size: 9px !important;
+  }
+
+  .a4-compact .sig-card {
+    height: 60px !important;
+    padding: 3px !important;
+  }
+
+  .a4-compact .sig-card img {
+    max-height: 30px !important;
+  }
+
+  .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

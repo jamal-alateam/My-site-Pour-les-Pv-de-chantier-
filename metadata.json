@@ -1,0 +1,8 @@
+{
+  "name": "Remix ARCHITEXPERT — Gestion de PV de Chantier",
+  "description": "Application professionnelle de gestion de procès-verbaux de chantier et suivi de chantiers d\u0027architecture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
