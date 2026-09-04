@@ -23,6 +23,7 @@ import { UserPlus, Check, Edit2, Trash2 } from 'lucide-react';
 
 import { compressImage } from '../utils/imageCompressor';
 import { GoogleDriveManager } from '../components/GoogleDriveManager';
+import { TeraBoxManager } from '../components/TeraBoxManager';
 
 interface HistoryItem {
   id: string;
@@ -372,6 +373,9 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
 
       {/* Google Drive Integration Section */}
       <GoogleDriveManager pvs={pvs} projects={projects} />
+
+      {/* TeraBox Cloud Storage Integration Section */}
+      <TeraBoxManager pvs={pvs} projects={projects} />
 
       {/* Data Management & Backup Section */}
       <div className="bg-white rounded-md border border-[#e2ded2] shadow-sm p-6 space-y-4">

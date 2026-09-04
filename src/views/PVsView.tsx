@@ -14,9 +14,11 @@ import {
   ChevronRight,
   X,
   RotateCcw,
-  User
+  User,
+  Cloud
 } from 'lucide-react';
 import { SitePV, Project, ViewType, UserProfile } from '../types';
+import { TeraBoxManager } from '../components/TeraBoxManager';
 
 interface PVsViewProps {
   pvs: SitePV[];
@@ -41,6 +43,8 @@ export const PVsView: React.FC<PVsViewProps> = ({
   const [filterProject, setFilterProject] = useState<string>(selectedProjectId || 'Tous');
   const [filterDate, setFilterDate] = useState<string>('');
   const [filterAuthor, setFilterAuthor] = useState<string>('Tous');
+  const [showTeraBoxModal, setShowTeraBoxModal] = useState<boolean>(false);
+  const [selectedPvForTeraBox, setSelectedPvForTeraBox] = useState<string | undefined>(undefined);
 
   const filteredPvs = pvs.filter(pv => {
     const proj = projects.find(p => p.id === pv.projectId);
@@ -107,12 +111,25 @@ export const PVsView: React.FC<PVsViewProps> = ({
           </div>
         </div>
 
-        <button
-          onClick={() => onNavigate('new_pv')}
-          className="px-5 py-2 bg-[#0B1F3A] text-white font-bold text-xs rounded hover:bg-[#123356] transition shadow-sm flex items-center gap-1.5"
-        >
-          <Plus className="w-4 h-4 text-[#C9A24B]" /> Rédiger un PV
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => {
+              setSelectedPvForTeraBox(undefined);
+              setShowTeraBoxModal(true);
+            }}
+            className="px-4 py-2 bg-[#0084FF] text-white hover:bg-[#0073e6] font-bold text-xs rounded transition shadow-sm flex items-center gap-1.5 cursor-pointer"
+            title="Sauvegarder et archiver vos PVs sur TeraBox (1024 Go gratuits)"
+          >
+            <Cloud className="w-4 h-4 text-white" /> Sauvegarder sur TeraBox (1024 Go)
+          </button>
+
+          <button
+            onClick={() => onNavigate('new_pv')}
+            className="px-5 py-2 bg-[#0B1F3A] text-white font-bold text-xs rounded hover:bg-[#123356] transition shadow-sm flex items-center gap-1.5"
+          >
+            <Plus className="w-4 h-4 text-[#C9A24B]" /> Rédiger un PV
+          </button>
+        </div>
       </div>
 
       {/* Barre de Recherche & Filtres Avancés */}
@@ -332,6 +349,17 @@ export const PVsView: React.FC<PVsViewProps> = ({
                         </button>
 
                         <button
+                          onClick={() => {
+                            setSelectedPvForTeraBox(pv.id);
+                            setShowTeraBoxModal(true);
+                          }}
+                          className="p-1 text-[#0084FF] hover:text-[#0066cc] rounded hover:bg-sky-50"
+                          title="Enregistrer ce PV sur TeraBox (1024 Go)"
+                        >
+                          <Cloud className="w-4 h-4" />
+                        </button>
+
+                        <button
                           onClick={() => onNavigate('edit_pv', { pvId: pv.id })}
                           className="p-1 text-gray-600 hover:text-[#0B1F3A] rounded hover:bg-[#f6f4ef]"
                           title="Modifier"
@@ -360,6 +388,32 @@ export const PVsView: React.FC<PVsViewProps> = ({
                 })}
               </tbody>
             </table>
+          </div>
+        </div>
+      )}
+
+      {/* TeraBox Cloud Modal */}
+      {showTeraBoxModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-3xl bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-[#c9c3b1] dark:border-[#475569] p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-[#e2ded2] dark:border-[#334155] pb-3">
+              <h3 className="font-bold text-sm text-[#0B1F3A] dark:text-[#f1f5f9] flex items-center gap-2">
+                <Cloud className="w-5 h-5 text-[#0084FF]" /> Sauvegarde Cloud TeraBox (1024 Go gratuits)
+              </h3>
+              <button
+                onClick={() => setShowTeraBoxModal(false)}
+                className="p-1 text-gray-400 hover:text-gray-600 rounded-lg cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <TeraBoxManager
+              pvs={pvs}
+              projects={projects}
+              selectedPvId={selectedPvForTeraBox}
+              onClose={() => setShowTeraBoxModal(false)}
+            />
           </div>
         </div>
       )}

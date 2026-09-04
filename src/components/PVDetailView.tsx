@@ -28,6 +28,7 @@ import { SitePV, Project, OfficeSettings, Participant, PhotoArrowAnnotation } fr
 import { BrandLogo } from './BrandLogo';
 import { SignaturePad } from './SignaturePad';
 import { GoogleDriveManager } from './GoogleDriveManager';
+import { TeraBoxManager } from './TeraBoxManager';
 import { PhotoWithAnnotations } from './PhotoWithAnnotations';
 import { PhotoAnnotatorModal } from './PhotoAnnotatorModal';
 
@@ -52,6 +53,7 @@ export const PVDetailView: React.FC<PVDetailViewProps> = ({
 }) => {
   const [isCompactA4, setIsCompactA4] = useState<boolean>(true);
   const [showDriveModal, setShowDriveModal] = useState<boolean>(false);
+  const [showTeraBoxModal, setShowTeraBoxModal] = useState<boolean>(false);
   const [annotatorModalOpen, setAnnotatorModalOpen] = useState<boolean>(false);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
 
@@ -316,6 +318,14 @@ export const PVDetailView: React.FC<PVDetailViewProps> = ({
           </button>
 
           <button
+            onClick={() => setShowTeraBoxModal(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#0084FF] text-white hover:bg-[#0073e6] font-bold text-xs rounded transition shadow-2xs cursor-pointer"
+            title="Enregistrer ce PV sur le site TeraBox (1024 Go gratuits)"
+          >
+            <Cloud className="w-3.5 h-3.5 text-white" /> TeraBox (1024 Go)
+          </button>
+
+          <button
             onClick={openDedicatedPrintWindow}
             className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-[#0B1F3A] text-[#0B1F3A] hover:bg-[#f6f4ef] font-semibold text-xs rounded transition"
             title="Fenêtre d'impression isolée sur 1 page A4"
@@ -353,6 +363,32 @@ export const PVDetailView: React.FC<PVDetailViewProps> = ({
               projects={project ? [project] : []}
               selectedPvId={pv.id}
               onClose={() => setShowDriveModal(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* TeraBox Cloud Export Modal */}
+      {showTeraBoxModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50">
+          <div className="w-full max-w-3xl bg-white dark:bg-[#1e293b] rounded-xl shadow-2xl border border-[#c9c3b1] dark:border-[#475569] p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-[#e2ded2] dark:border-[#334155] pb-3">
+              <h3 className="font-bold text-sm text-[#0B1F3A] dark:text-[#f1f5f9] flex items-center gap-2">
+                <Cloud className="w-5 h-5 text-[#0084FF]" /> Sauvegarde TeraBox Cloud — PV N° {pv.number}
+              </h3>
+              <button
+                onClick={() => setShowTeraBoxModal(false)}
+                className="p-1 text-gray-400 hover:text-gray-600 rounded-lg cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <TeraBoxManager
+              pvs={[pv]}
+              projects={project ? [project] : []}
+              selectedPvId={pv.id}
+              onClose={() => setShowTeraBoxModal(false)}
             />
           </div>
         </div>
